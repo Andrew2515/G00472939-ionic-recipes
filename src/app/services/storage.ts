@@ -9,7 +9,7 @@ Ionic Storage is like a small database in the background. */
 @Injectable({
   providedIn: 'root'
 })
-export class StorageSerice {
+export class StorageService {
 
   //Holds storage engine once set up.
   private store: Storage | null = null
