@@ -1,20 +1,54 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<ion-header>
+  <ion-toolbar color="primary">
     <ion-title>
-      Blank
+      Recipes ({{ studentNumber }})
     </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="goToFavourites()">
+        <ion-icon name="heart"></ion-icon>
+      </ion-button>
+
+      <ion-button (click)="goToSettings()">
+        <ion-icon name="settings"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<ion-content class="ion-padding">
+
+  <!-- Input area for entering ingredients -->
+  <ion-item>
+    <ion-label position="floating">Enter ingredients (comma separated)</ion-label>
+    <ion-input [(ngModel)]="ingredientsText"></ion-input>
+  </ion-item>
+
+  <ion-button expand="block" class="ion-margin-top" (click)="searchForRecipes()">
+    Search Recipes
+  </ion-button>
+
+
+  <ion-list *ngIf="recipeResults.length > 0" class="ion-margin-top">
+
+    <ion-card *ngFor="let recipe of recipeResults">
+
+      <ion-card-header>
+        <ion-card-title>{{ recipe.title }}</ion-card-title>
+      </ion-card-header>
+
+      <img [src]="recipe.image" alt="Recipe image">
+
+      <ion-card-content>
+        <ion-button size="small" (click)="openRecipeDetails(recipe)">
+          Details
+        </ion-button>
+      </ion-card-content>
+
+    </ion-card>
+
+  </ion-list>
+
 </ion-content>
+
