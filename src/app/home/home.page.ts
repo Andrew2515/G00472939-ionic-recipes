@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { RecipeService, RecipeSummary } from '../services/recipe';
-
+import { LoadingController } from '@ionic/angular'; 
 /*
   First page the user sees.
   It allows searching for recipes by typing ingredients.
@@ -23,26 +23,40 @@ export class HomePage {
   studentNumber = 'G00472939';  // Displayed at the top of the page.
 
   constructor(
-    private recipeService: RecipeService,
-    private router: Router
-  ) {}
+  private recipeService: RecipeService,
+  private router: Router,
+  private loadingCtrl: LoadingController
+) {}
+
 
   /*
     Called when the user taps the Search button.
     If the input is empty, do nothing.
   */
-  searchForRecipes() {
+ async searchForRecipes() {
     const cleanedInput = this.ingredientsText.trim();
 
     if (cleanedInput.length === 0) {
       return;
     }
 
+    //Show loading spinner
+    const loader = await this.loadingCtrl.create({
+      message: 'Searching recipes...',
+      spinner: 'circles'
+    });
+    await loader.present();
+
     // Call RecipeService to search Spoonacular.
-    this.recipeService.searchRecipes(cleanedInput).subscribe(response => {
+    this.recipeService.searchRecipes(cleanedInput).subscribe(async response => {
       // API returns an object containing "results".
       this.recipeResults = response.results;
+
+      // Hide spinner
+      await loader.dismiss();
+      
     });
+
   }
 
   /*

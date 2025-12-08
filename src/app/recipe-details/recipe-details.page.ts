@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RecipeService } from '../services/recipe';
 import { SettingsService } from '../services/settings';
 import { FavouritesService } from '../services/favourites';
-
+import { LoadingController } from '@ionic/angular'; 
 /*
   Displays full information about a single recipe.
   Shows the list of ingredients, steps, and a button for
@@ -23,21 +23,30 @@ export class RecipeDetailsPage implements OnInit {
   favouriteButtonText = 'Add to Favourites';
 
   constructor(
-    private route: ActivatedRoute,
-    private recipeService: RecipeService,
-    private settingsService: SettingsService,
-    private favService: FavouritesService
-  ) {}
+  private route: ActivatedRoute,
+  private recipeService: RecipeService,
+  private settingsService: SettingsService,
+  private favService: FavouritesService,
+  private loadingCtrl: LoadingController
+) {}
 
-  ngOnInit() {
+
+ async ngOnInit() {
     // Read recipe ID from the route.
     this.recipeId = Number(this.route.snapshot.paramMap.get('id'));
-
-    // Get preferred measurement unit.
+       // Get preferred measurement unit.
     this.chosenUnit = this.settingsService.getUnit();
 
+  // Show loading spinner while details load
+  const loader = await this.loadingCtrl.create({
+    message: 'Loading recipe...',
+    spinner: 'crescent'
+  });
+  await loader.present(); 
+
+
     // Load full recipe details from Spoonacular.
-    this.recipeService.getRecipeDetails(this.recipeId).subscribe(data => {
+    this.recipeService.getRecipeDetails(this.recipeId).subscribe(async data => {
       this.recipeData = data;
 
       // Update the favourite button text depending on saved status.
@@ -46,6 +55,8 @@ export class RecipeDetailsPage implements OnInit {
       } else {
         this.favouriteButtonText = 'Add to Favourites';
       }
+
+      await loader.dismiss(); 
     });
   }
 
