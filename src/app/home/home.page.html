@@ -49,6 +49,11 @@
     </ion-card>
 
   </ion-list>
+  <!-- Show message if no recipes were found -->
+<p *ngIf="hasSearched && recipeResults.length === 0" class="ion-text-center ion-margin-top">
+  No recipes found. Try different ingredients.
+</p>
+
 
 </ion-content>
 
