@@ -1,13 +1,42 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>recipe-details</ion-title>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{ recipeData?.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">recipe-details</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+
+  <!-- Recipe image -->
+  <img *ngIf="recipeData" [src]="recipeData.image" alt="Recipe photo" />
+
+  <!-- Ingredients Section -->
+  <h2 class="ion-margin-top">Ingredients</h2>
+
+  <ion-list *ngIf="recipeData">
+    <ion-item *ngFor="let ing of recipeData.extendedIngredients">
+      <ion-label>
+        <h3>{{ ing.original }}</h3>
+        <p>{{ getAmount(ing) }} {{ getUnitName(ing) }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Instructions Section -->
+  <h2 class="ion-margin-top">Instructions</h2>
+
+  <ion-list *ngIf="recipeData?.analyzedInstructions?.length > 0">
+    <ion-item *ngFor="let step of recipeData.analyzedInstructions[0].steps">
+      <ion-label>
+        <h3>Step {{ step.number }}</h3>
+        <p>{{ step.step }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Favourites Button -->
+  <ion-button expand="block" class="ion-margin-top" (click)="toggleFavourite()">
+    {{ favouriteButtonText }}
+  </ion-button>
+
 </ion-content>
+
