@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 import { RecipeService } from '../services/recipe';
 import { SettingsService } from '../services/settings';
 import { FavouritesService } from '../services/favourites';
@@ -11,15 +16,25 @@ import { LoadingController } from '@ionic/angular';
 */
 
 @Component({
+  standalone: true,
   selector: 'app-recipe-details',
   templateUrl: './recipe-details.page.html',
-  styleUrls: ['./recipe-details.page.scss']
+  styleUrls: ['./recipe-details.page.scss'],
+  imports:[
+    IonicModule,
+    CommonModule,  // needed for *ngIf, *ngFor
+    FormsModule
+
+  ]
+  
 })
 export class RecipeDetailsPage implements OnInit {
 
   recipeId!: number;
   recipeData: any = null;   // Holds all details from the API.
-  chosenUnit: 'metric' | 'us' = 'metric';
+  showSteps = false;
+  isFavourite = false; 
+  chosenUnit: 'metric' | 'us' = 'metric'; 
   favouriteButtonText = 'Add to Favourites';
 
   constructor(
@@ -34,6 +49,7 @@ export class RecipeDetailsPage implements OnInit {
  async ngOnInit() {
     // Read recipe ID from the route.
     this.recipeId = Number(this.route.snapshot.paramMap.get('id'));
+
        // Get preferred measurement unit.
     this.chosenUnit = this.settingsService.getUnit();
 
@@ -94,6 +110,7 @@ export class RecipeDetailsPage implements OnInit {
         image: this.recipeData.image
       };
       await this.favService.add(summary);
+      this.isFavourite = true;
       this.favouriteButtonText = 'Remove From Favourites';
     }
   }
