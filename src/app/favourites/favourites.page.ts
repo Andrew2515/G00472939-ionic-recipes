@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
+import {IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 import { FavouritesService } from '../services/favourites';
 import { RecipeSummary } from '../services/recipe';
 
@@ -10,9 +15,13 @@ import { RecipeSummary } from '../services/recipe';
 */
 
 @Component({
+  standalone: true,
   selector: 'app-favourites',
   templateUrl: './favourites.page.html',
-  styleUrls: ['./favourites.page.scss']
+  styleUrls: ['./favourites.page.scss'],
+  imports: [
+    IonicModule, CommonModule, FormsModule
+  ]   // REQUIRED for Ionic UI components + ngFor/ngIf
 })
 export class FavouritesPage implements OnInit {
 
