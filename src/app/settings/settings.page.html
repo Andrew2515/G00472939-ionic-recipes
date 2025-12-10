@@ -6,25 +6,22 @@
 
 <ion-content class="ion-padding">
 
-  <h2>Measurement Units</h2>
-
   <ion-list>
-
     <ion-radio-group [(ngModel)]="selectedUnit" (ionChange)="onUnitChange()">
 
       <ion-item>
         <ion-label>Metric</ion-label>
-        <ion-radio value="metric"></ion-radio>
+        <ion-radio slot="start" value="metric"></ion-radio>
       </ion-item>
 
       <ion-item>
         <ion-label>US</ion-label>
-        <ion-radio value="us"></ion-radio>
+        <ion-radio slot="start" value="us"></ion-radio>
       </ion-item>
 
     </ion-radio-group>
-
   </ion-list>
 
 </ion-content>
+
 

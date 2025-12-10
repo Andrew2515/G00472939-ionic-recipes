@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 import { SettingsService, UnitOption } from '../services/settings';
 
 /*
@@ -9,9 +14,15 @@ import { SettingsService, UnitOption } from '../services/settings';
 */
 
 @Component({
+  standalone: true,
   selector: 'app-settings',
   templateUrl: './settings.page.html',
-  styleUrls: ['./settings.page.scss']
+  styleUrls: ['./settings.page.scss'],
+  imports: [
+    IonicModule,
+    CommonModule,   // required for *ngIf, *ngFor
+    FormsModule     // required for [(ngModel)]
+  ]
 })
 export class SettingsPage implements OnInit {
 
