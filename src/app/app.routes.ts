@@ -1,40 +1,39 @@
 import { Routes } from '@angular/router';
-import { HomePage } from './home/home.page';
-
-
 
 export const routes: Routes = [
-  {
-    path: 'home',
-    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
-  },
+
+  // Default route
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full',
+    pathMatch: 'full'
   },
+
+  // Home page
+  {
+    path: 'home',
+    loadComponent: () =>
+      import('./home/home.page').then((m) => m.HomePage)
+  },
+
+  // Recipe details page
   {
     path: 'recipe-details/:id',
-    loadComponent: () => import('./recipe-details/recipe-details.page').then( m => m.RecipeDetailsPage)
+    loadComponent: () =>
+      import('./recipe-details/recipe-details.page').then((m) => m.RecipeDetailsPage)
   },
+
+  // Settings page
   {
     path: 'settings',
-    loadComponent: () => import('./settings/settings.page').then( m => m.SettingsPage)
+    loadComponent: () =>
+      import('./settings/settings.page').then((m) => m.SettingsPage)
   },
+
+  // Favourites page
   {
     path: 'favourites',
-    loadComponent: () => import('./favourites/favourites.page').then( m => m.FavouritesPage)
-  },
-  {
-    path: 'recipe-details',
-    loadComponent: () => import('./recipe-details/recipe-details.page').then( m => m.RecipeDetailsPage)
-  },
-  {
-    path: 'settings',
-    loadComponent: () => import('./settings/settings.page').then( m => m.SettingsPage)
-  },
-  {
-    path: 'favourites',
-    loadComponent: () => import('./favourites/favourites.page').then( m => m.FavouritesPage)
-  },
+    loadComponent: () =>
+      import('./favourites/favourites.page').then((m) => m.FavouritesPage)
+  }
 ];
